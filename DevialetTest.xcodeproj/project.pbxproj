@@ -16,6 +16,7 @@
 		3E24FD5D2AB4080C0015357C /* DevialetTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FD5C2AB4080C0015357C /* DevialetTestTests.swift */; };
 		3E24FD672AB4080C0015357C /* DevialetTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FD662AB4080C0015357C /* DevialetTestUITests.swift */; };
 		3E24FD692AB4080C0015357C /* DevialetTestUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FD682AB4080C0015357C /* DevialetTestUITestsLaunchTests.swift */; };
+		3E24FD852AB409940015357C /* ProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FD842AB409940015357C /* ProductListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		3E24FD622AB4080C0015357C /* DevialetTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DevialetTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E24FD662AB4080C0015357C /* DevialetTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevialetTestUITests.swift; sourceTree = "<group>"; };
 		3E24FD682AB4080C0015357C /* DevialetTestUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevialetTestUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		3E24FD842AB409940015357C /* ProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,12 +101,12 @@
 		3E24FD442AB4080B0015357C /* DevialetTest */ = {
 			isa = PBXGroup;
 			children = (
-				3E24FD452AB4080B0015357C /* AppDelegate.swift */,
-				3E24FD472AB4080B0015357C /* SceneDelegate.swift */,
+				3E24FD752AB4083A0015357C /* App */,
+				3E24FD762AB408410015357C /* Features */,
+				3E24FD782AB4085B0015357C /* Resources */,
+				3E24FD792AB4087B0015357C /* Services */,
+				3E24FD772AB408580015357C /* Tools */,
 				3E24FD492AB4080B0015357C /* ViewController.swift */,
-				3E24FD4B2AB4080B0015357C /* Main.storyboard */,
-				3E24FD4E2AB4080C0015357C /* Assets.xcassets */,
-				3E24FD502AB4080C0015357C /* LaunchScreen.storyboard */,
 				3E24FD532AB4080C0015357C /* Info.plist */,
 			);
 			path = DevialetTest;
@@ -125,6 +127,127 @@
 				3E24FD682AB4080C0015357C /* DevialetTestUITestsLaunchTests.swift */,
 			);
 			path = DevialetTestUITests;
+			sourceTree = "<group>";
+		};
+		3E24FD752AB4083A0015357C /* App */ = {
+			isa = PBXGroup;
+			children = (
+				3E24FD4B2AB4080B0015357C /* Main.storyboard */,
+				3E24FD502AB4080C0015357C /* LaunchScreen.storyboard */,
+				3E24FD452AB4080B0015357C /* AppDelegate.swift */,
+				3E24FD472AB4080B0015357C /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		3E24FD762AB408410015357C /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				3E24FD7A2AB408D40015357C /* ProductList */,
+				3E24FD7E2AB4094B0015357C /* ProductDetail */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		3E24FD772AB408580015357C /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		3E24FD782AB4085B0015357C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3E24FD4E2AB4080C0015357C /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		3E24FD792AB4087B0015357C /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		3E24FD7A2AB408D40015357C /* ProductList */ = {
+			isa = PBXGroup;
+			children = (
+				3E24FD7B2AB408DD0015357C /* Model */,
+				3E24FD7C2AB408E10015357C /* Views */,
+				3E24FD7D2AB4093E0015357C /* ViewModel */,
+			);
+			path = ProductList;
+			sourceTree = "<group>";
+		};
+		3E24FD7B2AB408DD0015357C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3E24FD7C2AB408E10015357C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3E24FD822AB409730015357C /* Screen */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3E24FD7D2AB4093E0015357C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3E24FD7E2AB4094B0015357C /* ProductDetail */ = {
+			isa = PBXGroup;
+			children = (
+				3E24FD812AB409650015357C /* Model */,
+				3E24FD802AB409610015357C /* Views */,
+				3E24FD7F2AB4095B0015357C /* ViewModel */,
+			);
+			path = ProductDetail;
+			sourceTree = "<group>";
+		};
+		3E24FD7F2AB4095B0015357C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3E24FD802AB409610015357C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3E24FD832AB4097A0015357C /* Screen */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3E24FD812AB409650015357C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3E24FD822AB409730015357C /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				3E24FD842AB409940015357C /* ProductListViewController.swift */,
+			);
+			path = Screen;
+			sourceTree = "<group>";
+		};
+		3E24FD832AB4097A0015357C /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Screen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,6 +383,7 @@
 			files = (
 				3E24FD4A2AB4080B0015357C /* ViewController.swift in Sources */,
 				3E24FD462AB4080B0015357C /* AppDelegate.swift in Sources */,
+				3E24FD852AB409940015357C /* ProductListViewController.swift in Sources */,
 				3E24FD482AB4080B0015357C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -440,6 +564,7 @@
 				DEVELOPMENT_TEAM = UVC4JM6XD4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DevialetTest/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Devialet;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -468,6 +593,7 @@
 				DEVELOPMENT_TEAM = UVC4JM6XD4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DevialetTest/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Devialet;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
