@@ -10,11 +10,18 @@ import Foundation
 import UIKit
 
 class ProductCollectionView: UIView {
+    // MARK: Parent Controller
+    /*
+     To trigger the segue to 'ProductDetailViewController'
+     when a cell is tapped on.
+     */
+    private var controller: UIViewController!
+    
+    
     // MARK: - Properties
     
     var collectionView: UICollectionView!
     var cellID = "CollectionCell"
-    
     
     // MARK: - ViewModel
     
@@ -34,7 +41,9 @@ class ProductCollectionView: UIView {
     
     convenience init(frame: CGRect, controller: UIViewController) {
         self.init(frame: frame)
-       
+        
+        self.controller = controller
+        
         setupView()
         setupCollectionView()
         setupBindings()
@@ -97,16 +106,31 @@ class ProductCollectionView: UIView {
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
                 guard let list = self?.viewModel.productCellViewModels else { return }
+                // FIXME: ❌ don't forget to remove these following prints just used to debug collectionView data processes & updates
                 print("\n [DEBUG] - {self?.collectionView.reloadData()} - updated list is now: \n", list)
                 print("")
             }
         }.store(in: &subscriptions)
     }
+    
+    // MARK: - Segue to 'ProductDetailViewController'
+    
+    /*
+     Trigger the segue to 'ProductDetailViewController' on
+     the parent ViewController
+     */
+    func createSegueToDetailViewController(for indexPath: IndexPath) {
+        let detailViewController = ProductDetailViewController()
+        // TODO: feed ProductDetailViewController's properties below
+        // e.g. detailViewController.currentProduct = self.viewModel.productCellViewModels[indexPath.row] something like this
+        
+        controller.navigationController?.pushViewController(detailViewController, animated: true)
+    }
 }
 
 // MARK: - UICollectionViewDataSource
 
-extension ProductCollectionView: UICollectionViewDataSource, UICollectionViewDelegate {
+extension ProductCollectionView: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -122,5 +146,28 @@ extension ProductCollectionView: UICollectionViewDataSource, UICollectionViewDel
         cell.cellViewModel = cellViewModel
         
         return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension ProductCollectionView: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        createSegueToDetailViewController(for: indexPath)
+    }
+    
+    // Animate the highlighting of the cell when tapped on
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            UIView.animate(withDuration: 0.2, animations: {
+                cell.alpha = 0.5
+            }) { (_) in
+                UIView.animate(withDuration: 0.2) {
+                    cell.alpha = 1.0
+                }
+            }
+        }
+        return true
     }
 }
