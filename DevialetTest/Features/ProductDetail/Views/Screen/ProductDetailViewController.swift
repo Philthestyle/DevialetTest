@@ -21,8 +21,8 @@ class ProductDetailViewController: UIViewController {
 
     // MARK: - Subviews
     
-    private var coverImageView: UIImageView = {
-        let imageView = UIImageView()
+    private var coverImageView: CacheImageView = {
+        let imageView = CacheImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .clear
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -92,6 +92,7 @@ class ProductDetailViewController: UIViewController {
         
     }
     
+    
     // MARK: - Setup UI
     
     private func setupUI() {
@@ -103,6 +104,8 @@ class ProductDetailViewController: UIViewController {
         if let product = self.currentProduct {
             self.title = "\(product.type) - \(product.serial)"
         }
+        
+        // view background
         self.view.backgroundColor = .productDetailVCBackground
     }
     
@@ -190,7 +193,7 @@ extension ProductDetailViewController {
                 
                 // reload cover here
                 guard let urlString = self?.viewModel.music?.cover else { return }
-                self?.coverImageView.loadFrom(url: urlString)
+                self?.coverImageView.downloadImageFrom(urlString: urlString, imageMode: .scaleAspectFit)
             }
         }.store(in: &subscriptions)
 

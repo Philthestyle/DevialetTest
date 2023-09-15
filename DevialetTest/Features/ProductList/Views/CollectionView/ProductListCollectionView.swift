@@ -25,7 +25,7 @@ class ProductCollectionView: UIView {
     
     // MARK: - ViewModel
     
-    var viewModel = ProductListViewModel(service: ProductListService.shared)
+    var viewModel = ProductListViewModel(service: ProductListService.shared, serverService: WebsocketServerStateService.shared)
     private var subscriptions = Set<AnyCancellable>()
     
     
