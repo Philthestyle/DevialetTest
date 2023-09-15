@@ -12,6 +12,7 @@ import UIKit
 extension UIColor {
     // ViewControllers background colors
     static let productListVCBackground = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+    static let productDetailVCBackground = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
 
     // CollectionView background colors
     static let productJoinedCollectionViewBackground = #colorLiteral(red: 0.09019608051, green: 0, blue: 0.3019607961, alpha: 1)
