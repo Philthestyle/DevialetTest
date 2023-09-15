@@ -15,9 +15,10 @@ class ProductDetailViewModel: ObservableObject, ProductDetailServiceProtocol {
     var product: ProductJoined?
     private var service: ProductDetailService!
     
-    // Combine
+    // Binding properties
     @Published private(set) var music: Music?
     @Published private(set) var battery: Battery?
+    @Published private(set) var isCurrentProductOnline: Bool = true
     
     public init(service: ProductDetailService) {
         self.service = service
@@ -67,8 +68,16 @@ class ProductDetailViewModel: ObservableObject, ProductDetailServiceProtocol {
                     }
                 }
             } catch {
-                throw error
+                /*
+                 stream ended because current Product is not online anymore
+                 */
+                print("[DEBUG] - 🔴 {stream ended} -> current Product went offline")
+                DispatchQueue.main.async {
+                    self.isCurrentProductOnline = false
+                }
+                throw error // FIXME: don't know if we need this here, because its not an 'error', its just that product is not online anymore or serial is wrong or missing...
             }
+            
         }
     }
 }

@@ -162,7 +162,7 @@ extension ProductDetailViewController {
      */
     func loadViewModel(url: String) async {
         Task {
-            try await viewModel.fetchData(url: url)
+            await viewModel.fetchData(url: url)
         }
     }
     
@@ -174,7 +174,11 @@ extension ProductDetailViewController {
      */
     
     func setupBindings() {
-        // playing
+        /*
+         viewModel.$music has changed -> need to update these following labels:
+            - 'self?.batteryPercentageLabel.text'
+            - 'self?.musicArtistLabel.text'
+         */
         viewModel.$music.sink { [weak self] music in
             // Update the UI on the main thread
             DispatchQueue.main.async {
@@ -188,11 +192,30 @@ extension ProductDetailViewController {
             }
         }.store(in: &subscriptions)
 
-        // battery
+        /*
+         viewModel.$battery has changed -> need to update following label:
+            - 'self?.batteryPercentageLabel.text'
+         */
         viewModel.$battery.sink { [weak self] state in
             // Update the UI on the main thread
             DispatchQueue.main.async {
                 self?.batteryPercentageLabel.text = "\(self?.viewModel.battery?.percent ?? 0)%"
+            }
+        }.store(in: &subscriptions)
+        
+        
+        /*
+         Dismiss viewController depending on currentProduct has left network, could be:
+            - no more battery (<1%) for 'Mania' only
+            - productLeft event (for 'Mania' or 'Phantom II')
+         */
+        viewModel.$isCurrentProductOnline.sink { [weak self] state in
+            // Update the UI on the main thread
+            DispatchQueue.main.async {
+                if self?.viewModel.isCurrentProductOnline == false {
+                    print("[DEBUG] - ⏮️ {navigation controller -> popToRoot} 🟠 current Product went offline")
+                    self?.navigationController?.popToRootViewController(animated: true)
+                }
             }
         }.store(in: &subscriptions)
     }
