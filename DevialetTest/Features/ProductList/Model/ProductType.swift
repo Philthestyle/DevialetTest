@@ -5,7 +5,6 @@
 //  Created by Faustin on 15/09/2023.
 //
 
-
 import Foundation
 
 // MARK: - ProductJoined
@@ -15,13 +14,11 @@ struct ProductJoined: Decodable {
     let type: String
 }
 
-
 // MARK: - ProductLeft
 
 struct ProductLeft: Decodable {
     let serial: String
 }
-
 
 // MARK: - Enum 'ProductType' with associated values
 /*
@@ -56,4 +53,30 @@ enum ProductType: Decodable {
         // throw error
         throw DecodingError.dataCorruptedError(forKey: .productJoined, in: container, debugDescription: "No match for '.productJoined'")
     }
+}
+
+extension ProductJoined {
+    enum SpeakerType: CaseIterable {
+      case mania
+      case phantom
+      
+      var description: String {
+        switch self {
+        case .mania:
+            return "Mania"
+        case .phantom:
+            return "Phantom II"
+        }
+      }
+    }
+
+    static var MOCK_ProductJoined: [ProductJoined] = [
+        .init(serial: UUID().uuidString.uppercased(), type: SpeakerType.allCases.randomElement()!.description),
+        .init(serial: UUID().uuidString.uppercased(), type: SpeakerType.allCases.randomElement()!.description),
+        .init(serial: UUID().uuidString.uppercased(), type: SpeakerType.allCases.randomElement()!.description),
+        .init(serial: UUID().uuidString.uppercased(), type: SpeakerType.allCases.randomElement()!.description),
+        .init(serial: UUID().uuidString.uppercased(), type: SpeakerType.allCases.randomElement()!.description),
+        .init(serial: UUID().uuidString.uppercased(), type: SpeakerType.allCases.randomElement()!.description),
+        .init(serial: UUID().uuidString.uppercased(), type: SpeakerType.allCases.randomElement()!.description)
+    ]
 }
