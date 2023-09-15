@@ -96,6 +96,9 @@ class ProductCollectionView: UIView {
             // Update the UI on the main thread
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
+                guard let list = self?.viewModel.productCellViewModels else { return }
+                print("\n [DEBUG] - {self?.collectionView.reloadData()} - updated list is now: \n", list)
+                print("")
             }
         }.store(in: &subscriptions)
     }

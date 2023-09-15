@@ -62,7 +62,9 @@ class ProductListViewModel: ObservableObject, ProductListServiceProtocol {
                                 }
                             case .productLeft(let decodedProductLeft):
                                 print("[DEBUG] - {ws event} | productLeft just leaved network 🫣", decodedProductLeft)
-                                break // FIXME: ❌ here remove productJoined corresponding to same serial as decodedProductLeft.serial
+                                self.filterDataArrays(serial: decodedProductLeft.serial, startDate: Date()) { doneInMilliseconds in
+                                    print("[DEBUG] - {filtering data arrays} for 'products' & 'productCellViewModels' removing last productLeft from list")
+                                }
                             default:
                                 print("I was not parsed :(")
                             }
@@ -78,6 +80,16 @@ class ProductListViewModel: ObservableObject, ProductListServiceProtocol {
     
     func getCellViewModel(at indexPath: IndexPath) -> ProductListCellViewModel {
         return productCellViewModels[indexPath.row]
+    }
+    
+    /*
+     Method used to return
+     */
+    private func filterDataArrays(serial: String, startDate: Date, completion: @escaping (_ isDone: Bool) -> Void) {
+        DispatchQueue.main.async {
+            self.productCellViewModels = self.productCellViewModels.filter { $0.productSerial != serial }
+            completion(true)
+        }
     }
 }
 
