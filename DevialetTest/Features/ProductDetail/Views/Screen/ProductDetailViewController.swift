@@ -90,6 +90,12 @@ class ProductDetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        viewModel.product = nil
+        
+        /*
+         To avoid to continue to listen 'Music' and 'Battery' from last selectedProduct
+         */
+        viewModel.disconnect()
     }
     
     

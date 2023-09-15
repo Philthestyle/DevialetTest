@@ -83,4 +83,9 @@ class ProductDetailViewModel: ObservableObject, ProductDetailServiceProtocol {
             }
         }
     }
+    
+    func disconnect() {
+        self.service.socketConnection?.cancel(with: .normalClosure, reason: nil)
+        print("[DEBUG] - 🔴 {Close} websocket connection from 'ProductDetailsViewController'")
+    }
 }
