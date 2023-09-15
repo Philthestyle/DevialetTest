@@ -33,7 +33,7 @@ class ProductListViewController: UIViewController {
     
     private func setupView() {
         self.title = "Home"
-        self.view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) // FIXME: create a DesignSystem class or UIColor extension to externalize this
+        self.view.backgroundColor = .productListVCBackground
     }
     
     /*

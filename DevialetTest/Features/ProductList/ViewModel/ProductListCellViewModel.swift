@@ -1,5 +1,5 @@
 //
-//  ProductListCellModel.swift
+//  ProductListCellViewModel.swift
 //  DevialetTest
 //
 //  Created by Faustin on 15/09/2023.

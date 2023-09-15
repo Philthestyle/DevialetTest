@@ -15,10 +15,12 @@ class ProductCollectionView: UIView {
     var collectionView: UICollectionView!
     var cellID = "CollectionCell"
     
+    
     // MARK: - ViewModel
     
-    var viewModel = ProductListViewModel()
-
+    var viewModel = ProductListViewModel(service: ProductListService.shared)
+    private var subscriptions = Set<AnyCancellable>()
+    
     
     // MARK: - Init methods
     
@@ -32,21 +34,22 @@ class ProductCollectionView: UIView {
     
     convenience init(frame: CGRect, controller: UIViewController) {
         self.init(frame: frame)
-        
+       
         setupView()
         setupCollectionView()
-        
-        viewModel.creatCellViewModelArray(for: ProductJoined.MOCK_ProductJoined)
+        setupBindings()
     }
+    
     
     // MARK: - Setup Methods
     
     func setupView() {
-        backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        backgroundColor = .productJoinedCollectionViewBackground
     }
     
     // Setup the collection view
     func setupCollectionView() {
+        
         let horizontalInsets: CGFloat = 22
         let viewWidth = frame.width
         
@@ -77,10 +80,24 @@ class ProductCollectionView: UIView {
         collectionView.delegate = self
         
         // Register the CollectionView's cell
-        collectionView.register(ProductCollectionViewCell.self,forCellWithReuseIdentifier: cellID)
+        collectionView.register(ProductCollectionViewCell.self,
+                                forCellWithReuseIdentifier: cellID)
         
         // Add CollectionView to current View
         addSubview(collectionView)
+    }
+    
+    func setupBindings() {
+        /*
+         Listen for viewModel.$productCellViewModels changes
+         to trigger reloadData() of the collectionView
+         */
+        viewModel.$productCellViewModels.sink { [weak self] _ in
+            // Update the UI on the main thread
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }.store(in: &subscriptions)
     }
 }
 

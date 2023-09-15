@@ -85,7 +85,7 @@ class ProductCollectionViewCell: UICollectionViewCell {
         setupNSLayoutConstraints()
       
         // Setup cell UI
-        backgroundColor = #colorLiteral(red: 0.1137256995, green: 0.1137253419, blue: 0.1050826684, alpha: 1)
+        backgroundColor = .productCellBackground
         layer.cornerRadius = 26
     }
     
