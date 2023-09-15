@@ -13,7 +13,7 @@ class ProductDetailViewController: UIViewController {
     // MARK: - Properties
     
     var currentProduct: ProductJoined?
-    var viewModel = ProductDetailViewModel()
+    var viewModel = ProductDetailViewModel(service: ProductDetailService.shared)
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -74,6 +74,10 @@ class ProductDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setupBindings()
+        Task {
+            guard let serial = currentProduct?.serial else { return }
+            await loadViewModel(url: APIServiceEndPoints.listenProductDetail(serial: serial).urlString)
+        }
     }
     
     override func viewDidLoad() {
@@ -150,6 +154,20 @@ class ProductDetailViewController: UIViewController {
 
 extension ProductDetailViewController {
     /*
+     Launch websocketSession to listen to 'productDetail' endPoint:
+        --> APIServiceEndPoints.listenProductDetail(serial: \(productSerial) -> "ws://127.0.0.1:8080/home/\(serial)")
+     to get 'ProductDetail' to be decoded as these following cases:
+        - 'Music'(title: String, cover: String, artist: String)
+        - 'Battery'(percent: Int)
+     */
+    func loadViewModel(url: String) async {
+        Task {
+            try await viewModel.fetchData(url: url)
+        }
+    }
+    
+    
+    /*
      Bindings to listen to viewModel's following properties:
         - viewModel.$music
         - viewModel.$battery
@@ -161,11 +179,11 @@ extension ProductDetailViewController {
             // Update the UI on the main thread
             DispatchQueue.main.async {
                // reload data of music section here
-                self?.musicTitleLabel.text = "\(self?.viewModel.music.title ?? "no title error")"
-                self?.musicArtistLabel.text = "\(self?.viewModel.music.artist ?? "no artist error")"
+                self?.musicTitleLabel.text = "\(self?.viewModel.music?.title ?? "no title error")"
+                self?.musicArtistLabel.text = "\(self?.viewModel.music?.artist ?? "no artist error")"
                 
                 // reload cover here
-                guard let urlString = self?.viewModel.music.cover else { return }
+                guard let urlString = self?.viewModel.music?.cover else { return }
                 self?.coverImageView.loadFrom(url: urlString)
             }
         }.store(in: &subscriptions)

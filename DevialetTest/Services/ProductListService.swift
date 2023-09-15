@@ -11,7 +11,7 @@ protocol ProductListServiceProtocol {
     func listenForProductEvents(url: String) async throws
 }
 
-class ProductListService {
+struct ProductListService {
     static let shared = ProductListService()
     var url: String = APIServiceEndPoints.listenProductEvents.urlString
     var socketConnection: URLSessionWebSocketTask?
