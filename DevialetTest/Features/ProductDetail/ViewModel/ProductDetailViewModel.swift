@@ -46,6 +46,8 @@ class ProductDetailViewModel: ObservableObject, ProductDetailServiceProtocol {
         guard let socketConnection = self.service.socketConnection else { return }
         let stream = AbstractWebsocketService(task: socketConnection)
         
+        print("[DEBUG] - 🟢 {Start} websocket for 'listenForProductDetails' with url: \(url)")
+        
         Task {
             do {
                 for try await message in stream {
@@ -54,15 +56,17 @@ class ProductDetailViewModel: ObservableObject, ProductDetailServiceProtocol {
                             let decoded = try? JSONDecoder().decode(ProductDetail.self, from: data)
                             switch decoded {
                             case .playing(let music):
+                                print("[DEBUG] - {ws event} 💿 'playing' decoded as 'Music' -->", music)
                                 DispatchQueue.main.async {
                                     self.music = music
                                 }
                             case .battery(let battery):
+                                print("[DEBUG] - {ws event} 🪫 'battery' decoded as 'Battery' --> ", battery)
                                 DispatchQueue.main.async {
                                     self.battery = battery
                                 }
                             default:
-                                print("I was not parsed :(")
+                                print("[DEBUG] - {ws event} ⚠️ 'ProductDetail' was not parsed")
                             }
                         }
                     }
@@ -71,13 +75,12 @@ class ProductDetailViewModel: ObservableObject, ProductDetailServiceProtocol {
                 /*
                  stream ended because current Product is not online anymore
                  */
-                print("[DEBUG] - 🔴 {stream ended} -> current Product went offline")
+                print("[DEBUG] - 🔴 {AbstractWebsocketService -> socketConnection} stream ended because current Product is not online anymore")
                 DispatchQueue.main.async {
                     self.isCurrentProductOnline = false
                 }
                 throw error // FIXME: don't know if we need this here, because its not an 'error', its just that product is not online anymore or serial is wrong or missing...
             }
-            
         }
     }
 }
