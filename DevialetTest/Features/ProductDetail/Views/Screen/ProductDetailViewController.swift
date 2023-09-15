@@ -5,25 +5,177 @@
 //  Created by Faustin on 15/09/2023.
 //
 
+import Combine
 import UIKit
 
 class ProductDetailViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
+    
+    // MARK: - Properties
+    
+    var currentProduct: ProductJoined?
+    var viewModel = ProductDetailViewModel()
+    
+    private var subscriptions = Set<AnyCancellable>()
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - Subviews
+    
+    private var coverImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = .clear
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "placeHolder")
+        imageView.layer.borderWidth = 0.2
+        
+        imageView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        return imageView
+    }()
+    
+    private var musicTitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private var musicArtistLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private var batteryPercentageLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .green
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private var musicStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .leading
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    
+    // MARK: - View Controller's Life Cycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupBindings()
     }
-    */
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupUI()
+    }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+    }
+    
+    // MARK: - Setup UI
+    
+    private func setupUI() {
+        // Add all subviews
+        addSubviewsViews()
+        setupNSLayoutConstraints()
+        
+        // view
+        if let product = self.currentProduct {
+            self.title = "\(product.type) - \(product.serial)"
+        }
+        self.view.backgroundColor = .productDetailVCBackground
+    }
+    
+    
+    // MARK: - Add all subviews
+    
+    private func addSubviewsViews() {
+        view.addSubview(batteryPercentageLabel)
+        view.addSubview(musicTitleLabel)
+        view.addSubview(musicArtistLabel)
+        view.addSubview(coverImageView)
+        
+        view.addSubview(musicStackView)
+    
+        // add 'productNameLabel' & 'serialLabel' into 'labelStackView'
+        musicStackView.addArrangedSubview(self.coverImageView)
+        musicStackView.addArrangedSubview(self.musicTitleLabel)
+        musicStackView.addArrangedSubview(self.musicArtistLabel)
+    }
+    
+    
+    // MARK: - setupNSLayoutConstraints
+    
+    private func setupNSLayoutConstraints() {
+        // 'coverImageView'
+        NSLayoutConstraint.activate([
+            coverImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 12),
+            coverImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 12),
+            coverImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+        
+        // 'musicStackView'
+        NSLayoutConstraint.activate([
+            musicStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 12),
+            musicStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height / 4),
+            musicStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            musicStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        // 'batteryPercentageLabel'
+        NSLayoutConstraint.activate([
+            batteryPercentageLabel.heightAnchor.constraint(equalToConstant: 30),
+            batteryPercentageLabel.bottomAnchor.constraint(equalTo: musicStackView.bottomAnchor, constant: 90),
+            batteryPercentageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+    }
+}
+
+// MARK: - Load View Model & setup Bindings
+
+extension ProductDetailViewController {
+    /*
+     Bindings to listen to viewModel's following properties:
+        - viewModel.$music
+        - viewModel.$battery
+     */
+    
+    func setupBindings() {
+        // playing
+        viewModel.$music.sink { [weak self] music in
+            // Update the UI on the main thread
+            DispatchQueue.main.async {
+               // reload data of music section here
+                self?.musicTitleLabel.text = "\(self?.viewModel.music.title ?? "no title error")"
+                self?.musicArtistLabel.text = "\(self?.viewModel.music.artist ?? "no artist error")"
+                
+                // reload cover here
+                guard let urlString = self?.viewModel.music.cover else { return }
+                self?.coverImageView.loadFrom(url: urlString)
+            }
+        }.store(in: &subscriptions)
+
+        // battery
+        viewModel.$battery.sink { [weak self] state in
+            // Update the UI on the main thread
+            DispatchQueue.main.async {
+                self?.batteryPercentageLabel.text = "\(self?.viewModel.battery?.percent ?? 0)%"
+            }
+        }.store(in: &subscriptions)
+    }
 }

@@ -105,10 +105,6 @@ class ProductCollectionView: UIView {
             // Update the UI on the main thread
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
-                guard let list = self?.viewModel.productCellViewModels else { return }
-                // FIXME: ❌ don't forget to remove these following prints just used to debug collectionView data processes & updates
-                print("\n [DEBUG] - {self?.collectionView.reloadData()} - updated list is now: \n", list)
-                print("")
             }
         }.store(in: &subscriptions)
     }
@@ -121,8 +117,11 @@ class ProductCollectionView: UIView {
      */
     func createSegueToDetailViewController(for indexPath: IndexPath) {
         let detailViewController = ProductDetailViewController()
-        // TODO: feed ProductDetailViewController's properties below
-        // e.g. detailViewController.currentProduct = self.viewModel.productCellViewModels[indexPath.row] something like this
+
+        let cellViewModel = viewModel.productCellViewModels[indexPath.row]
+        let productJoined = ProductJoined(serial: cellViewModel.productSerial, type: cellViewModel.produtName)
+        detailViewController.currentProduct = productJoined
+        detailViewController.viewModel.product = productJoined
         
         controller.navigationController?.pushViewController(detailViewController, animated: true)
     }

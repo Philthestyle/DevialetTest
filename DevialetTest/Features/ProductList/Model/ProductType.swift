@@ -70,6 +70,8 @@ extension ProductJoined {
       }
     }
 
+    // MARK: - Testing and Debugging purpose
+    
     static var MOCK_ProductJoined: [ProductJoined] = [
         .init(serial: UUID().uuidString.uppercased(), type: SpeakerType.allCases.randomElement()!.description),
         .init(serial: UUID().uuidString.uppercased(), type: SpeakerType.allCases.randomElement()!.description),
