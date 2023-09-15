@@ -14,6 +14,7 @@ class ProductDetailViewController: UIViewController {
     
     var currentProduct: ProductJoined?
     var viewModel = ProductDetailViewModel(service: ProductDetailService.shared)
+    var isBatterySupported: Bool = false
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -126,16 +127,17 @@ class ProductDetailViewController: UIViewController {
     // MARK: - setupNSLayoutConstraints
     
     private func setupNSLayoutConstraints() {
+        let leadingTrailling: CGFloat = 44
         // 'coverImageView'
         NSLayoutConstraint.activate([
-            coverImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 12),
-            coverImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 12),
+            coverImageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - leadingTrailling),
+            coverImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - leadingTrailling),
             coverImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         // 'musicStackView'
         NSLayoutConstraint.activate([
-            musicStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 12),
+            musicStackView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - leadingTrailling),
             musicStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height / 4),
             musicStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             musicStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
@@ -199,7 +201,12 @@ extension ProductDetailViewController {
         viewModel.$battery.sink { [weak self] state in
             // Update the UI on the main thread
             DispatchQueue.main.async {
-                self?.batteryPercentageLabel.text = "\(self?.viewModel.battery?.percent ?? 0)%"
+                if self?.viewModel.battery?.percent != nil {
+                    self?.isBatterySupported = true
+                    self?.batteryPercentageLabel.text = "\(self?.viewModel.battery?.percent ?? 0)%"
+                } else {
+                    self?.isBatterySupported = false
+                }
             }
         }.store(in: &subscriptions)
         
