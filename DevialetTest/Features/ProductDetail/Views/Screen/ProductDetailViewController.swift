@@ -26,7 +26,6 @@ class ProductDetailViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .clear
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "placeHolder")
         imageView.layer.borderWidth = 0.2
         
         imageView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)

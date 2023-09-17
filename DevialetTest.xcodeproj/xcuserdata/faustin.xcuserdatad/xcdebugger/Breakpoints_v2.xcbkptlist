@@ -14,8 +14,8 @@
             filePath = "DevialetTest/Features/ProductDetail/Views/Screen/ProductDetailViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239">
+            startingLineNumber = "238"
+            endingLineNumber = "238">
             <Locations>
                <Location
                   uuid = "1FBBA3CB-52B7-4677-8E44-EE18D1FE1F2F - 1a5a2b3d08f8ce06"
@@ -60,8 +60,10 @@
             filePath = "DevialetTest/Features/ProductDetail/Views/Screen/ProductDetailViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238">
+            startingLineNumber = "237"
+            endingLineNumber = "237"
+            landmarkName = "ProductDetailViewController"
+            landmarkType = "21">
             <Locations>
                <Location
                   uuid = "34D08FB4-D6E2-4D40-B689-3C76DC61409E - 1a5a2b3d08f8ce27"

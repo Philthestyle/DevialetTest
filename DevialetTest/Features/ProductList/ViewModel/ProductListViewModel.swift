@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class ProductListViewModel: ObservableObject, ProductListServiceProtocol {
+class ProductListViewModel: ObservableObject {
     
     // MARK: - Properties
     let service: ProductListService!
@@ -16,12 +16,16 @@ class ProductListViewModel: ObservableObject, ProductListServiceProtocol {
     
     @Published private(set) var productCellViewModels: [ProductListCellViewModel] = []
     
+    private var subscriptions = Set<AnyCancellable>()
+    
     // MARK: - Init service & fetchData
     
     public init(service: ProductListService, serverService: WebsocketServerStateService) {
         self.service = service
         self.serverStateService = serverService
         
+        setupBindings()
+
         /*
          Launch websocketSession to listen to 'productList' endPoint:
             --> APIServiceEndPoints.listenProductEvents -> "ws://127.0.0.1:8080/home")
@@ -43,7 +47,7 @@ class ProductListViewModel: ObservableObject, ProductListServiceProtocol {
                 print("[DEBUG] 📡 ✅ - [WS SERVER] | Server is running 🥳")
                 print("[DEBUG] 📡 ✅ - [WS SERVER] | URL: \(APIServiceEndPoints.serverBaseURL.urlString) \n")
                 Task {
-                    try await self.listenForProductEvents(url: serviceURL)
+                    try await self.service.listenForProductEvents(url: serviceURL)
                 }
             } else {
                 print("[DEBUG] 📡 ❌ - [WS SERVER] | Server seems to be offline 🫣")
@@ -71,45 +75,19 @@ class ProductListViewModel: ObservableObject, ProductListServiceProtocol {
         }
     }
     
-    // MARK: - WebSocket Method to start listening from events
-    
-    func listenForProductEvents(url: String) async throws {
-        guard let url = URL(string: url) else { return }
-        let socketConnection = URLSession.shared.webSocketTask(with: url)
-        let stream = AbstractWebsocketService(task: socketConnection)
-        print("[DEBUG] - 🟢 {Start} websocket for 'listenForProductEvents' with url: \(url)")
-        Task {
-            do {
-                for try await message in stream {
-                    if case .string(let text) = message {
-                        if let data = text.data(using: .utf8) {
-                            let decoded = try? JSONDecoder().decode(ProductType.self, from: data)
-                            switch decoded {
-                            case .productJoined(let decodedProductJoined):
-                                print("[DEBUG] - {ws event} ✅ 'productJoined' decoded -->", decodedProductJoined)
-                                DispatchQueue.main.async {
-                                    self.productCellViewModels.append(ProductListCellViewModel(icon: decodedProductJoined.type, produtName: decodedProductJoined.type, productSerial: decodedProductJoined.serial))
-                                }
-                            case .productLeft(let decodedProductLeft):
-                                print("[DEBUG] - {ws event} ❌ 'productLeft' decoded --> ", decodedProductLeft)
-                                self.filterDataArrays(serial: decodedProductLeft.serial, startDate: Date()) { doneInMilliseconds in
-                                    print("[DEBUG] - {filtering data arrays} for 'products' & 'productCellViewModels' - done in: \(doneInMilliseconds) ⏱️")
-                                }
-                            default:
-                                print("[DEBUG] - {ws event} ⚠️ 'ProductType' was not parsed")
-                            }
-                        }
-                    }
-                }
-            } catch {
-                // handle error
-                print("[DEBUG] - 🔴 {ProductListViewModel -> listenForProductEvents} .failure with error: ", error)
-                throw error
+    /*
+     Listen for viewModel.$productCellViewModels changes
+     to trigger reloadData() of the collectionView
+     */
+    func setupBindings() {
+        service.$productCellViewModels.sink { [weak self] _ in
+            // Update the UI on the main thread
+            DispatchQueue.main.async {
+                guard let cells = self?.service.productCellViewModels else { return }
+                self?.productCellViewModels = cells
             }
-            print("[DEBUG] - 🔴 {AbstractWebsocketService -> socketConnection} stream ended")
-        }
+        }.store(in: &subscriptions)
     }
-    
     
     func getCellViewModel(at indexPath: IndexPath) -> ProductListCellViewModel {
         return productCellViewModels[indexPath.row]
