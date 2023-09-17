@@ -26,7 +26,6 @@ class ProductDetailViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .clear
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "placeHolder")
         imageView.layer.borderWidth = 0.2
         
         imageView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -86,7 +85,6 @@ class ProductDetailViewController: UIViewController {
         
         setupUI()
     }
-
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -166,10 +164,10 @@ class ProductDetailViewController: UIViewController {
 extension ProductDetailViewController {
     /*
      Launch websocketSession to listen to 'productDetail' endPoint:
-        --> APIServiceEndPoints.listenProductDetail(serial: \(productSerial) -> "ws://127.0.0.1:8080/home/\(serial)")
+     --> APIServiceEndPoints.listenProductDetail(serial: \(productSerial) -> "ws://127.0.0.1:8080/home/\(serial)")
      to get 'ProductDetail' to be decoded as these following cases:
-        - 'Music'(title: String, cover: String, artist: String)
-        - 'Battery'(percent: Int)
+     - 'Music'(title: String, cover: String, artist: String)
+     - 'Battery'(percent: Int)
      */
     func loadViewModel(url: String) async {
         Task {
@@ -180,20 +178,25 @@ extension ProductDetailViewController {
     
     /*
      Bindings to listen to viewModel's following properties:
-        - viewModel.$music
-        - viewModel.$battery
+     - viewModel.$music
+     - viewModel.$battery
      */
     
     func setupBindings() {
         /*
          viewModel.$music has changed -> need to update these following labels:
-            - 'self?.batteryPercentageLabel.text'
-            - 'self?.musicArtistLabel.text'
+         - 'self?.batteryPercentageLabel.text'
+         - 'self?.musicArtistLabel.text'
          */
         viewModel.$music.sink { [weak self] music in
+            // reset data to make it UI flow friendly
+            self?.coverImageView.image = nil
+            self?.musicTitleLabel.text = nil
+            self?.musicArtistLabel.text = nil
+            
             // Update the UI on the main thread
             DispatchQueue.main.async {
-               // reload data of music section here
+                // reload data of music section here
                 self?.musicTitleLabel.text = "\(self?.viewModel.music?.title ?? "no title error")"
                 self?.musicArtistLabel.text = "\(self?.viewModel.music?.artist ?? "no artist error")"
                 
@@ -205,7 +208,7 @@ extension ProductDetailViewController {
 
         /*
          viewModel.$battery has changed -> need to update following label:
-            - 'self?.batteryPercentageLabel.text'
+         - 'self?.batteryPercentageLabel.text'
          */
         viewModel.$battery.sink { [weak self] state in
             // Update the UI on the main thread
@@ -222,8 +225,8 @@ extension ProductDetailViewController {
         
         /*
          Dismiss viewController depending on currentProduct has left network, could be:
-            - no more battery (<1%) for 'Mania' only
-            - productLeft event (for 'Mania' or 'Phantom II')
+         - no more battery (<1%) for 'Mania' only
+         - productLeft event (for 'Mania' or 'Phantom II')
          */
         viewModel.$isCurrentProductOnline.sink { [weak self] state in
             // Update the UI on the main thread

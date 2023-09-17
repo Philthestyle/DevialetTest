@@ -46,17 +46,18 @@ class ProductDetailViewModel: ObservableObject, ProductDetailServiceProtocol {
         guard let socketConnection = self.service.socketConnection else { return }
         let stream = AbstractWebsocketService(task: socketConnection)
         
-        print("[DEBUG] - 🟢 {Start} websocket for 'listenForProductDetails' with url: \(url)")
-        
         Task {
             do {
+                print("[DEBUG] - 🟢 {Success connection} websocket for 'listenForProductDetails' with url: \(url)")
                 for try await message in stream {
                     if case .string(let text) = message {
                         if let data = text.data(using: .utf8) {
+                            
                             let decoded = try? JSONDecoder().decode(ProductDetail.self, from: data)
+                            
                             switch decoded {
                             case .playing(let music):
-                                print("[DEBUG] - {ws event} 💿 'playing' decoded as 'Music' -->", music)
+                                print("\n[DEBUG] - {ws event} 💿 'playing' decoded as 'Music'\n    -->", music)
                                 DispatchQueue.main.async {
                                     self.music = music
                                 }
