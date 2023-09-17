@@ -12,35 +12,50 @@ import UIKit
 /*
  Used to download image from url quickly and reload them from cache if already cached
  */
-class CacheImageView: UIImageView {
+final class ImageStore: NSObject {
+    static let imageCache = NSCache<NSString, UIImage>()
+}
 
-    // MARK: - Constants
-
-    let imageCache = NSCache<NSString, AnyObject>()
+final class CacheImageView: UIImageView {
 
     // MARK: - Properties
-
     var imageURLString: String?
-
+    
+    // MARK: - Methods
     func downloadImageFrom(urlString: String, imageMode: UIView.ContentMode) {
         guard let url = URL(string: urlString) else { return }
+        
+        // display loader (UIActivityIndicatorView)
         self.showLoading()
-        downloadImageFrom(url: url, imageMode: imageMode)
+        
+        self.downloadImageFrom(url: url, imageMode: imageMode, startDate: Date()) { usingNSCache in
+            DispatchQueue.main.async {
+                self.stopLoading()
+                
+                usingNSCache ? print("[DEBUG] | 💶 {NSCache getting} 'coverImageView' for forKey: \(url.absoluteString as NSString)") : print("[DEBUG] | ⏬ {URLSession 'dowloading'} 'coverImageView' for url: ", url)
+            }
+        }
     }
 
-    func downloadImageFrom(url: URL, imageMode: UIView.ContentMode) {
+    private func downloadImageFrom(url: URL, imageMode: UIView.ContentMode, startDate: Date, completion: @escaping (_ usingNSCache: Bool) -> Void) {
         contentMode = imageMode
-        if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) as? UIImage {
-            self.image = cachedImage
+        if let cachedImage = ImageStore.imageCache.object(forKey: url.absoluteString as NSString) {
+            DispatchQueue.main.async {
+                self.image = cachedImage
+                
+                completion(true)
+            }
         } else {
-            
             URLSession.shared.dataTask(with: url) { data, response, error in
                 guard let data = data, error == nil else { return }
+                
                 DispatchQueue.main.async {
                     let imageToCache = UIImage(data: data)
-                    self.imageCache.setObject(imageToCache!, forKey: url.absoluteString as NSString)
+                    // save image using NSCache
+                    ImageStore.imageCache.setObject(imageToCache!, forKey: url.absoluteString as NSString)
                     self.image = imageToCache
-                    self.stopLoading()
+                    
+                    completion(false)
                 }
             }.resume()
         }

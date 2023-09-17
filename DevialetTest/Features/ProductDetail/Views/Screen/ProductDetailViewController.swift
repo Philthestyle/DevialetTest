@@ -190,6 +190,11 @@ extension ProductDetailViewController {
             - 'self?.musicArtistLabel.text'
          */
         viewModel.$music.sink { [weak self] music in
+            // reset data to make it UI flow friendly
+            self?.coverImageView.image = nil
+            self?.musicTitleLabel.text = nil
+            self?.musicArtistLabel.text = nil
+            
             // Update the UI on the main thread
             DispatchQueue.main.async {
                // reload data of music section here
