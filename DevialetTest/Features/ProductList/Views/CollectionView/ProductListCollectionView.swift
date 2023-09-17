@@ -17,6 +17,7 @@ class ProductCollectionView: UIView {
      */
     private var controller: UIViewController!
     private var timer: Timer?
+    private var isServerRunning: Bool?
     
     
     // MARK: - Properties
@@ -108,6 +109,17 @@ class ProductCollectionView: UIView {
                 self?.collectionView.reloadData()
             }
         }.store(in: &subscriptions)
+        
+        /*
+         Listen for viewModel.$isServerRunning changes
+         to trigger reloadData() of the collectionView
+         */
+        viewModel.$isServerRunning.sink { [weak self] isServerOnline in
+            // Update the UI on the main thread
+            DispatchQueue.main.async {
+                self?.isServerRunning = isServerOnline
+            }
+        }.store(in: &subscriptions)
     }
     
     // MARK: - Segue to 'ProductDetailViewController'
@@ -137,7 +149,7 @@ extension ProductCollectionView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (self.viewModel.productCellViewModels.count == 0) {
-            let isServerOnline = viewModel.service.isServerRunning 
+            guard let isServerOnline = self.isServerRunning else { return 0 }
             
             // message to display in case server is running, websocket is connected but we have no product at all that is connected
             let noProductButOnlineString = "No product connected to network for now 🫣, be patient they will show up soon 😎"

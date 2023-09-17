@@ -15,12 +15,14 @@ class ProductListViewModel: ObservableObject {
     let serverStateService: WebsocketServerStateService!
     
     @Published private(set) var productCellViewModels: [ProductListCellViewModel] = []
+    @Published private(set) var isServerRunning: Bool?
+    @Published private(set) var timeLesftToNewConnectionString: String?
     
     private var subscriptions = Set<AnyCancellable>()
     
     private var timer: Timer?
     
-    @Published private(set) var timeLesftToNewConnectionString: String?
+    
     
     // MARK: - Init service & fetchData
     
@@ -97,9 +99,12 @@ class ProductListViewModel: ObservableObject {
         service.$isServerRunning.sink { [weak self] hasLostConnection in
             if hasLostConnection == true {
                 print("[DEBUG] - ❌ {websocket server} connection lost", hasLostConnection)
-            }
+                
+                            }
             
             DispatchQueue.main.async {
+                self?.isServerRunning = false
+
                 self?.showDebugLogsForNetWork()
             }
         }.store(in: &subscriptions)
