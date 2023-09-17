@@ -16,6 +16,7 @@ class ProductCollectionView: UIView {
      when a cell is tapped on.
      */
     private var controller: UIViewController!
+    private var timer: Timer?
     
     
     // MARK: - Properties
@@ -135,6 +136,19 @@ extension ProductCollectionView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if (self.viewModel.productCellViewModels.count == 0) {
+            let isServerOnline = viewModel.service.isServerRunning 
+            
+            // message to display in case server is running, websocket is connected but we have no product at all that is connected
+            let noProductButOnlineString = "No product connected to network for now 🫣, be patient they will show up soon 😎"
+            
+            let serverIsOfflineString = "❌ Server is not running - check your network 📡"
+            
+            self.collectionView.setEmptyMessage(isServerOnline ? noProductButOnlineString : serverIsOfflineString, textColor: .white)
+        } else {
+            self.collectionView.restore()
+        }
+        
         return viewModel.productCellViewModels.count
     }
     

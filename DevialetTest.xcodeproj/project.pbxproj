@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3E24FD462AB4080B0015357C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FD452AB4080B0015357C /* AppDelegate.swift */; };
 		3E24FD482AB4080B0015357C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FD472AB4080B0015357C /* SceneDelegate.swift */; };
-		3E24FD4A2AB4080B0015357C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FD492AB4080B0015357C /* ViewController.swift */; };
 		3E24FD4D2AB4080B0015357C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E24FD4B2AB4080B0015357C /* Main.storyboard */; };
 		3E24FD4F2AB4080C0015357C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E24FD4E2AB4080C0015357C /* Assets.xcassets */; };
 		3E24FD522AB4080C0015357C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E24FD502AB4080C0015357C /* LaunchScreen.storyboard */; };
@@ -30,12 +29,14 @@
 		3E24FDA02AB421110015357C /* ProductListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FD9F2AB421110015357C /* ProductListService.swift */; };
 		3E24FDA22AB42E960015357C /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FDA12AB42E960015357C /* ProductDetailViewController.swift */; };
 		3E24FDA42AB433480015357C /* ProductDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FDA32AB433480015357C /* ProductDetailViewModel.swift */; };
-		3E24FDA62AB435120015357C /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FDA52AB435120015357C /* UIImage+Extensions.swift */; };
 		3E24FDA82AB43DA70015357C /* ProductDetailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FDA72AB43DA70015357C /* ProductDetailService.swift */; };
 		3E24FDAE2AB4554A0015357C /* DateComponentFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FDAD2AB4554A0015357C /* DateComponentFormatter+Extensions.swift */; };
 		3E24FDB02AB455EF0015357C /* WebsocketServerStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FDAF2AB455EF0015357C /* WebsocketServerStateService.swift */; };
 		3E24FDB22AB45EC50015357C /* CacheImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FDB12AB45EC50015357C /* CacheImageView.swift */; };
 		3E24FDB72AB463A20015357C /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FDB62AB463A20015357C /* DesignSystem.swift */; };
+		3E6F69F62AB701FE00D2F549 /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6F69F52AB701FE00D2F549 /* UICollectionView+Extensions.swift */; };
+		3E6F69F92AB712D000D2F549 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 3E6F69F82AB712D000D2F549 /* Toast */; };
+		3ED058222AB7009D00DC2AEA /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED058212AB7009D00DC2AEA /* UIView+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,7 +60,6 @@
 		3E24FD422AB4080B0015357C /* DevialetTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevialetTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E24FD452AB4080B0015357C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E24FD472AB4080B0015357C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3E24FD492AB4080B0015357C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3E24FD4C2AB4080B0015357C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3E24FD4E2AB4080C0015357C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3E24FD512AB4080C0015357C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -83,12 +83,13 @@
 		3E24FD9F2AB421110015357C /* ProductListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListService.swift; sourceTree = "<group>"; };
 		3E24FDA12AB42E960015357C /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
 		3E24FDA32AB433480015357C /* ProductDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewModel.swift; sourceTree = "<group>"; };
-		3E24FDA52AB435120015357C /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		3E24FDA72AB43DA70015357C /* ProductDetailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailService.swift; sourceTree = "<group>"; };
 		3E24FDAD2AB4554A0015357C /* DateComponentFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateComponentFormatter+Extensions.swift"; sourceTree = "<group>"; };
 		3E24FDAF2AB455EF0015357C /* WebsocketServerStateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsocketServerStateService.swift; sourceTree = "<group>"; };
 		3E24FDB12AB45EC50015357C /* CacheImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheImageView.swift; sourceTree = "<group>"; };
 		3E24FDB62AB463A20015357C /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		3E6F69F52AB701FE00D2F549 /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
+		3ED058212AB7009D00DC2AEA /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E6F69F92AB712D000D2F549 /* Toast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,7 +146,6 @@
 				3E24FD782AB4085B0015357C /* Resources */,
 				3E24FD792AB4087B0015357C /* Services */,
 				3E24FD772AB408580015357C /* Tools */,
-				3E24FD492AB4080B0015357C /* ViewController.swift */,
 				3E24FD532AB4080C0015357C /* Info.plist */,
 			);
 			path = DevialetTest;
@@ -192,6 +193,7 @@
 			children = (
 				3E24FDB32AB45EC90015357C /* Custom classes */,
 				3E24FD9C2AB420460015357C /* Extensions */,
+				3ED058202AB7005200DC2AEA /* Helpers */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -324,8 +326,9 @@
 			isa = PBXGroup;
 			children = (
 				3E24FD9D2AB4204E0015357C /* Color+Extensions.swift */,
-				3E24FDA52AB435120015357C /* UIImage+Extensions.swift */,
 				3E24FDAD2AB4554A0015357C /* DateComponentFormatter+Extensions.swift */,
+				3ED058212AB7009D00DC2AEA /* UIView+Extensions.swift */,
+				3E6F69F52AB701FE00D2F549 /* UICollectionView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -334,9 +337,16 @@
 			isa = PBXGroup;
 			children = (
 				3E24FDB12AB45EC50015357C /* CacheImageView.swift */,
-				3E24FDB62AB463A20015357C /* DesignSystem.swift */,
 			);
 			path = "Custom classes";
+			sourceTree = "<group>";
+		};
+		3ED058202AB7005200DC2AEA /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3E24FDB62AB463A20015357C /* DesignSystem.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -355,6 +365,9 @@
 			dependencies = (
 			);
 			name = DevialetTest;
+			packageProductDependencies = (
+				3E6F69F82AB712D000D2F549 /* Toast */,
+			);
 			productName = DevialetTest;
 			productReference = 3E24FD422AB4080B0015357C /* DevialetTest.app */;
 			productType = "com.apple.product-type.application";
@@ -427,6 +440,9 @@
 				Base,
 			);
 			mainGroup = 3E24FD392AB4080B0015357C;
+			packageReferences = (
+				3E6F69F72AB712D000D2F549 /* XCRemoteSwiftPackageReference "toast-swift" */,
+			);
 			productRefGroup = 3E24FD432AB4080B0015357C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -470,7 +486,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E24FD4A2AB4080B0015357C /* ViewController.swift in Sources */,
 				3E24FD462AB4080B0015357C /* AppDelegate.swift in Sources */,
 				3E24FD962AB414910015357C /* ProductCollectionViewCell.swift in Sources */,
 				3E24FD942AB413830015357C /* ProductListCollectionView.swift in Sources */,
@@ -482,12 +497,13 @@
 				3E24FDB72AB463A20015357C /* DesignSystem.swift in Sources */,
 				3E24FD992AB414E00015357C /* ProductListCellViewModel.swift in Sources */,
 				3E24FDAE2AB4554A0015357C /* DateComponentFormatter+Extensions.swift in Sources */,
+				3E6F69F62AB701FE00D2F549 /* UICollectionView+Extensions.swift in Sources */,
 				3E24FDA02AB421110015357C /* ProductListService.swift in Sources */,
 				3E24FD482AB4080B0015357C /* SceneDelegate.swift in Sources */,
+				3ED058222AB7009D00DC2AEA /* UIView+Extensions.swift in Sources */,
 				3E24FD8C2AB40DC10015357C /* APIEndPoints.swift in Sources */,
 				3E24FD9E2AB4204E0015357C /* Color+Extensions.swift in Sources */,
 				3E24FDA22AB42E960015357C /* ProductDetailViewController.swift in Sources */,
-				3E24FDA62AB435120015357C /* UIImage+Extensions.swift in Sources */,
 				3E24FD8E2AB40E330015357C /* APIError.swift in Sources */,
 				3E24FDB02AB455EF0015357C /* WebsocketServerStateService.swift in Sources */,
 				3E24FDA82AB43DA70015357C /* ProductDetailService.swift in Sources */,
@@ -836,6 +852,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3E6F69F72AB712D000D2F549 /* XCRemoteSwiftPackageReference "toast-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/BastiaanJansen/toast-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3E6F69F82AB712D000D2F549 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3E6F69F72AB712D000D2F549 /* XCRemoteSwiftPackageReference "toast-swift" */;
+			productName = Toast;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3E24FD3A2AB4080B0015357C /* Project object */;
 }
