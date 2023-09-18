@@ -35,7 +35,6 @@
 		3E24FDB22AB45EC50015357C /* CacheImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FDB12AB45EC50015357C /* CacheImageView.swift */; };
 		3E24FDB72AB463A20015357C /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24FDB62AB463A20015357C /* DesignSystem.swift */; };
 		3E6F69F62AB701FE00D2F549 /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6F69F52AB701FE00D2F549 /* UICollectionView+Extensions.swift */; };
-		3E6F69F92AB712D000D2F549 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 3E6F69F82AB712D000D2F549 /* Toast */; };
 		3ED058222AB7009D00DC2AEA /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED058212AB7009D00DC2AEA /* UIView+Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -97,7 +96,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E6F69F92AB712D000D2F549 /* Toast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,7 +364,6 @@
 			);
 			name = DevialetTest;
 			packageProductDependencies = (
-				3E6F69F82AB712D000D2F549 /* Toast */,
 			);
 			productName = DevialetTest;
 			productReference = 3E24FD422AB4080B0015357C /* DevialetTest.app */;
@@ -441,7 +438,6 @@
 			);
 			mainGroup = 3E24FD392AB4080B0015357C;
 			packageReferences = (
-				3E6F69F72AB712D000D2F549 /* XCRemoteSwiftPackageReference "toast-swift" */,
 			);
 			productRefGroup = 3E24FD432AB4080B0015357C /* Products */;
 			projectDirPath = "";
@@ -852,25 +848,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		3E6F69F72AB712D000D2F549 /* XCRemoteSwiftPackageReference "toast-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/BastiaanJansen/toast-swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		3E6F69F82AB712D000D2F549 /* Toast */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3E6F69F72AB712D000D2F549 /* XCRemoteSwiftPackageReference "toast-swift" */;
-			productName = Toast;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3E24FD3A2AB4080B0015357C /* Project object */;
 }
