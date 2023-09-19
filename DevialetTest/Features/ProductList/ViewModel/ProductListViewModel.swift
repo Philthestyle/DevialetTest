@@ -49,7 +49,6 @@ class ProductListViewModel: ObservableObject {
     
     func fetchData(serviceURL: String) async {
         serverStateService.checkServerRunningState(urlPath: APIServiceEndPoints.serverBaseURL.urlString, completion: { (isValid) in
-            
             if isValid {
                 print("[DEBUG] 📡 ✅ - [WS SERVER] | Server is running 🥳")
                 print("[DEBUG] 📡 ✅ - [WS SERVER] | URL: \(APIServiceEndPoints.serverBaseURL.urlString) \n")
@@ -96,16 +95,13 @@ class ProductListViewModel: ObservableObject {
         /*
          Listen for service.$hasLostConnection changes to retry to connect and display empty collectionView message and reload connection view maybe ?
          */
-        service.$isServerRunning.sink { [weak self] hasLostConnection in
-            if hasLostConnection == true {
-                print("[DEBUG] - ❌ {websocket server} connection lost", hasLostConnection)
-                
-                            }
-            
-            DispatchQueue.main.async {
-                self?.isServerRunning = false
-
-                self?.showDebugLogsForNetWork()
+        service.$isServerRunning.sink { [weak self] isServerRunning in
+            self?.isServerRunning = isServerRunning
+            if isServerRunning == false {
+                print("[DEBUG] - ❌ {websocket server} connection lost", isServerRunning)
+                DispatchQueue.main.async {
+                    self?.showDebugLogsForNetWork()
+                }
             }
         }.store(in: &subscriptions)
     }

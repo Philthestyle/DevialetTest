@@ -36,6 +36,9 @@ class ProductListService: ObservableObject, ProductListServiceProtocol {
             do {
                 print("[DEBUG] - 🟢 {Success connection} websocket for 'listenForProductDetails' with url: \(url)")
                 
+                // make class .sink this property: 'isServerRunning' that server is not running anymore
+                self.isServerRunning = true
+                
                 for try await message in stream {
                     if case .string(let text) = message {
                         if let data = text.data(using: .utf8) {
@@ -68,12 +71,14 @@ class ProductListService: ObservableObject, ProductListServiceProtocol {
                 // handle error
                 print("[DEBUG] - 🔴 {ProductListViewModel -> listenForProductEvents} .failure with error: ", error)
                 
-                isServerRunning = false
-                self.socketConnection?.cancel()
-                
                 // reset data to avoid being able to tap on cells that does not exist anymore
                 self.productCellViewModels = []
                 
+                // make class .sink this property: 'isServerRunning' that server is not running anymore
+                isServerRunning = false
+                
+                self.socketConnection?.cancel()
+            
                 throw error
             }
             print("[DEBUG] - 🔴 {AbstractWebsocketService -> socketConnection} stream ended")
